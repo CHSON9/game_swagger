@@ -1,6 +1,28 @@
 {
   "definitions": {
-
+    "Login": {
+      "properties": {
+        "password": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        }
+      }
+    },
+    "Signup": {
+      "properties": {
+        "nickname": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        }
+      }
+    }
   },
   "info": {
     "description": "powered by Flasgger",
@@ -17,30 +39,13 @@
             "name": "body",
             "required": true,
             "schema": {
-              "properties": {
-                "password": {
-                  "type": "string"
-                },
-                "username": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/Login"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "로그인 성공",
-            "schema": {
-              "properties": {
-                "token": {
-                  "type": "string"
-                },
-                "user_id": {
-                  "type": "integer"
-                }
-              }
-            }
+            "description": "로그인 성공"
           }
         },
         "summary": "로그인 API",
@@ -57,25 +62,12 @@
             "name": "body",
             "required": true,
             "schema": {
-              "properties": {
-                "nickname": {
-                  "description": "닉네임",
-                  "type": "string"
-                },
-                "password": {
-                  "description": "비밀번호",
-                  "type": "string"
-                },
-                "username": {
-                  "description": "아이디",
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/Signup"
             }
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "회원가입 성공"
           }
         },
@@ -95,19 +87,15 @@
             "schema": {
               "properties": {
                 "role": {
-                  "description": "tagger 또는 runner",
                   "type": "string"
                 },
                 "session_id": {
-                  "description": "시작 시 받은 세션 ID",
                   "type": "integer"
                 },
                 "touch_count": {
-                  "description": "최종 터치/피격 횟수",
                   "type": "integer"
                 },
                 "user_id": {
-                  "description": "플레이어 본인 ID",
                   "type": "integer"
                 }
               }
@@ -116,10 +104,10 @@
         ],
         "responses": {
           "200": {
-            "description": "결과 저장 성공"
+            "description": "저장 완료"
           }
         },
-        "summary": "최종 결과 데이터 저장 (DB 연동 반영)",
+        "summary": "최종 결과 데이터 저장",
         "tags": [
           "Game"
         ]
@@ -127,6 +115,19 @@
     },
     "/game/result/{session_id}": {
       "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "조회 성공"
+          }
+        },
         "summary": "결과창용 상세 데이터 조회",
         "tags": [
           "Game"
@@ -142,12 +143,7 @@
             "required": true,
             "schema": {
               "properties": {
-                "difficulty": {
-                  "description": "선택한 난이도",
-                  "type": "string"
-                },
-                "player_id": {
-                  "description": "접속한 유저 ID",
+                "tagger_id": {
                   "type": "integer"
                 }
               }
@@ -156,22 +152,10 @@
         ],
         "responses": {
           "200": {
-            "description": "세션 생성 성공",
-            "schema": {
-              "properties": {
-                "session_id": {
-                  "description": "DB에서 생성된 판 번호",
-                  "type": "integer"
-                },
-                "tagger_id": {
-                  "description": "서버가 지정한 술래 ID",
-                  "type": "integer"
-                }
-              }
-            }
+            "description": "세션 생성 성공"
           }
         },
-        "summary": "게임 세션 생성 및 시작 (DB 연동 반영)",
+        "summary": "게임 세션 생성 및 시작",
         "tags": [
           "Game"
         ]
