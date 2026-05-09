@@ -1,0 +1,191 @@
+{
+  "definitions": {
+
+  },
+  "info": {
+    "description": "powered by Flasgger",
+    "termsOfService": "/tos",
+    "title": "A swagger API",
+    "version": "0.0.1"
+  },
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "password": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "로그인 성공",
+            "schema": {
+              "properties": {
+                "token": {
+                  "type": "string"
+                },
+                "user_id": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "summary": "로그인 API",
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/auth/signup": {
+      "post": {
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "nickname": {
+                  "description": "닉네임",
+                  "type": "string"
+                },
+                "password": {
+                  "description": "비밀번호",
+                  "type": "string"
+                },
+                "username": {
+                  "description": "아이디",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "회원가입 성공"
+          }
+        },
+        "summary": "회원가입 API",
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/game/end": {
+      "post": {
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "role": {
+                  "description": "tagger 또는 runner",
+                  "type": "string"
+                },
+                "session_id": {
+                  "description": "시작 시 받은 세션 ID",
+                  "type": "integer"
+                },
+                "touch_count": {
+                  "description": "최종 터치/피격 횟수",
+                  "type": "integer"
+                },
+                "user_id": {
+                  "description": "플레이어 본인 ID",
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "결과 저장 성공"
+          }
+        },
+        "summary": "최종 결과 데이터 저장 (DB 연동 반영)",
+        "tags": [
+          "Game"
+        ]
+      }
+    },
+    "/game/result/{session_id}": {
+      "get": {
+        "summary": "결과창용 상세 데이터 조회",
+        "tags": [
+          "Game"
+        ]
+      }
+    },
+    "/game/start": {
+      "post": {
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "difficulty": {
+                  "description": "선택한 난이도",
+                  "type": "string"
+                },
+                "player_id": {
+                  "description": "접속한 유저 ID",
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "세션 생성 성공",
+            "schema": {
+              "properties": {
+                "session_id": {
+                  "description": "DB에서 생성된 판 번호",
+                  "type": "integer"
+                },
+                "tagger_id": {
+                  "description": "서버가 지정한 술래 ID",
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "summary": "게임 세션 생성 및 시작 (DB 연동 반영)",
+        "tags": [
+          "Game"
+        ]
+      }
+    },
+    "/socket_docs": {
+      "get": {
+        "description": "이 섹션은 소켓 이벤트를 설명합니다.\n\n1. **image_frame (Client -\u003E Server)**\n   - image_data: Base64 이미지\n   - user_id: 유저 ID\n   \n2. **result_data (Server -\u003E Client)**\n   - status: \"대기중/탐지중/성공/실패\"\n   - is_detected: true/false (감지 여부)\n   - confidence: 0~100 (신뢰도)\n   - touch_event: true/false (터치 여부)\n   - current_hits: 누적 터치 횟수\n   - time_left: 남은 시간 (초)",
+        "summary": "실시간 통신(Socket.io) 명세서",
+        "tags": [
+          "Real-time (Socket.io)"
+        ]
+      }
+    }
+  },
+  "swagger": "2.0"
+}
