@@ -1,5 +1,84 @@
 {
   "definitions": {
+    "CheckID": {
+      "properties": {
+        "username": {
+          "description": "중복 확인할 아이디",
+          "type": "string"
+        }
+      }
+    },
+    "CheckNickname": {
+      "properties": {
+        "nickname": {
+          "description": "중복 확인 할 닉네임",
+          "type": "string"
+        }
+      }
+    },
+    "GameEnd": {
+      "properties": {
+        "role": {
+          "enum": [
+            "tagger",
+            "runner"
+          ],
+          "type": "string"
+        },
+        "session_id": {
+          "type": "integer"
+        },
+        "touch_count": {
+          "type": "integer"
+        },
+        "user_id": {
+          "type": "integer"
+        }
+      }
+    },
+    "GameResultResponse": {
+      "properties": {
+        "data": {
+          "items": {
+            "id": "GameResultDetail",
+            "properties": {
+              "result_id": {
+                "type": "integer"
+              },
+              "role": {
+                "enum": [
+                  "tagger",
+                  "runner"
+                ],
+                "type": "string"
+              },
+              "session_id": {
+                "type": "integer"
+              },
+              "touch_count": {
+                "type": "integer"
+              },
+              "user_id": {
+                "type": "integer"
+              }
+            }
+          },
+          "type": "array"
+        },
+        "status": {
+          "example": "success",
+          "type": "string"
+        }
+      }
+    },
+    "GameStart": {
+      "properties": {
+        "tagger_id": {
+          "description": "랜덤으로 지정된 술래의 User ID",
+          "type": "integer"
+        }
+      }
+    },
     "Login": {
       "properties": {
         "password": {
@@ -39,11 +118,7 @@
             "name": "body",
             "required": true,
             "schema": {
-              "properties": {
-                "username": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/CheckID"
             }
           }
         ],
@@ -66,11 +141,7 @@
             "name": "body",
             "required": true,
             "schema": {
-              "properties": {
-                "nickname": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/CheckNickname"
             }
           }
         ],
@@ -139,20 +210,7 @@
             "name": "body",
             "required": true,
             "schema": {
-              "properties": {
-                "role": {
-                  "type": "string"
-                },
-                "session_id": {
-                  "type": "integer"
-                },
-                "touch_count": {
-                  "type": "integer"
-                },
-                "user_id": {
-                  "type": "integer"
-                }
-              }
+              "$ref": "#/definitions/GameEnd"
             }
           }
         ],
@@ -179,7 +237,10 @@
         ],
         "responses": {
           "200": {
-            "description": "조회 성공"
+            "description": "조회 성공",
+            "schema": {
+              "$ref": "#/definitions/GameResultResponse"
+            }
           }
         },
         "summary": "결과창용 상세 데이터 조회",
@@ -196,11 +257,7 @@
             "name": "body",
             "required": true,
             "schema": {
-              "properties": {
-                "tagger_id": {
-                  "type": "integer"
-                }
-              }
+              "$ref": "#/definitions/GameStart"
             }
           }
         ],
