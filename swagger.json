@@ -31,6 +31,60 @@
     "version": "0.0.1"
   },
   "paths": {
+    "/auth/check-id": {
+      "post": {
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "username": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "사용 가능 여부 반환"
+          }
+        },
+        "summary": "아이디 중복 확인 API",
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/auth/check-nickname": {
+      "post": {
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "nickname": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "사용 가능 여부 반환"
+          }
+        },
+        "summary": "닉네임 중복 확인 API",
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
     "/auth/login": {
       "post": {
         "parameters": [
