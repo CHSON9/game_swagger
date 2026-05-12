@@ -71,10 +71,11 @@
         }
       }
     },
-    "GameStart": {
+    "GameStartRequest": {
       "properties": {
         "tagger_id": {
           "description": "랜덤으로 지정된 술래의 User ID",
+          "example": 5,
           "type": "integer"
         }
       }
@@ -194,11 +195,43 @@
         "responses": {
           "201": {
             "description": "회원가입 성공"
+          },
+          "400": {
+            "description": "회원가입 실패"
           }
         },
         "summary": "회원가입 API",
         "tags": [
           "Authentication"
+        ]
+      }
+    },
+    "/detect_test": {
+      "post": {
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "properties": {
+                "session_id": {
+                  "description": "세션 ID (미입력 시 서버의 현재 세션 번호 사용)",
+                  "example": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "로그 기록 성공"
+          }
+        },
+        "summary": "움직임 감지 로그 기록 (AI 엔진/테스트용)",
+        "tags": [
+          "Game"
         ]
       }
     },
@@ -257,13 +290,25 @@
             "name": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/GameStart"
+              "$ref": "#/definitions/GameStartRequest"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "세션 생성 성공"
+            "description": "세션 생성 성공",
+            "schema": {
+              "properties": {
+                "session_id": {
+                  "example": 1,
+                  "type": "integer"
+                },
+                "status": {
+                  "example": "success",
+                  "type": "string"
+                }
+              }
+            }
           }
         },
         "summary": "게임 세션 생성 및 시작",
