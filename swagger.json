@@ -74,8 +74,8 @@
     "GameStartRequest": {
       "properties": {
         "tagger_id": {
-          "description": "랜덤으로 지정된 술래의 User ID",
-          "example": 5,
+          "description": "select-tagger에서 받아온 술래의 User ID",
+          "example": 1,
           "type": "integer"
         }
       }
@@ -282,6 +282,34 @@
         ]
       }
     },
+    "/game/select-tagger": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "술래 선정 성공",
+            "schema": {
+              "properties": {
+                "status": {
+                  "example": "success",
+                  "type": "string"
+                },
+                "tagger_id": {
+                  "example": 5,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "접속 중인 유저 없음"
+          }
+        },
+        "summary": "접속 중인 유저 중 랜덤으로 술래 한 명을 선정",
+        "tags": [
+          "Game"
+        ]
+      }
+    },
     "/game/start": {
       "post": {
         "parameters": [
@@ -306,12 +334,16 @@
                 "status": {
                   "example": "success",
                   "type": "string"
+                },
+                "tagger_id": {
+                  "example": 1,
+                  "type": "integer"
                 }
               }
             }
           }
         },
-        "summary": "게임 세션 생성 및 시작",
+        "summary": "기억된 tagger_id로 실제 게임 세션을 생성하고 시작",
         "tags": [
           "Game"
         ]
