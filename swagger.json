@@ -16,18 +16,18 @@
         "session_id": {
           "type": "integer"
         },
-        "team_id": {
-          "description": "데이터베이스 users.user_id 매핑용 고유 번호",
+        "touch_count": {
           "type": "integer"
         },
-        "touch_count": {
+        "user_id": {
+          "description": "데이터베이스 users.user_id 매핑용 고유 번호",
           "type": "integer"
         }
       }
     },
     "GameStartRequest": {
       "properties": {
-        "team_id": {
+        "user_id": {
           "description": "로그인 성공 후 보유한 고유 user_id (팀 식별 번호)",
           "example": 1,
           "type": "integer"
